@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #hiddenForm {
+            display: none; 
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        let clickCount = 0;
+
+        // Listen for clicks anywhere on the page
+        document.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 4) {
+                document.getElementById('hiddenForm').style.display = 'block';
+            }
+        });
+        function start() {
+            // Get the port value from the input
+            const portInput = document.getElementById('portInput').value;
+            const port = parseInt(portInput, 10);
+
+            // Validate port
+            if (isNaN(port) || port <= 0 || port > 65535) {
+                alert("Please enter a valid port number (1-65535).");
+                return;
+            }
+
+            // Get container to hold the images
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = ''; // clear previous images
+
+            // Create and append 3 images
+
+            img = document.createElement('img');
+            img.src = `https://DESTINATION:${port + 90}/image.png`;
+            container.appendChild(img);
+            img = document.createElement('img');
+            img.src = `https://DESTINATION:${port + 99}/image.png`;
+            container.appendChild(img);
+            img = document.createElement('img');
+            img.src = `https://DESTINATION:${port + 98}/image.png`;
+            container.appendChild(img);
+        }
+    </script>
+</head>
+<body>
+    <form id="hiddenForm" onsubmit="event.preventDefault(); start();">
+        <label for="portInput">Port:</label>
+        <input type="text" id="portInput" name="port">
+        <button type="submit">Load Images</button>
+    </form>
+    <div id="imageContainer" style="margin-top:20px;"></div>
+</body>
+</html>
